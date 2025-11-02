@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Kaushan+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-light: #FAF3E0; 
+            --shadow-light: #ffffff;
+            --shadow-dark: #DCD4BF; 
+            --text-dark: #3B3B3B;
+
+            --bg-dark: #1A1A1A; 
+            --bg-dark-card: #222222;
+            --text-light: #ECF0F1;
+            
+            --accent-yes: #D9534F;
+            --accent-no: #3B8B86;
+            --accent-stats: #E9C46A; 
+
+            --special-font: 'Kaushan Script', cursive;
+            --main-font: 'Nunito', sans-serif;
+            --stats-font: 'Roboto', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            font-family: var(--main-font);
+            overflow: hidden; 
+            position: relative;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            transition: background-color 0.5s ease-in-out;
+            color: var(--text-dark);
+        }
+
+        .container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+            z-index: 2; 
+        }
+
+        .container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #clouds {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1; 
+        }
+
+        .cloud {
+            position: absolute;
+            background: #ffffff;
+            opacity: 0.6;
+            filter: blur(8px);
+            border-radius: 100px;
+            animation: moveClouds linear infinite;
+        }
+
+        .cloud-1 {
+            width: 200px; height: 60px;
+            top: 10%; left: -250px;
+            animation-duration: 45s;
+            box-shadow: 
+                60px -30px 0 10px #fff,
+                120px -10px 0 0 #fff,
+                -40px -20px 0 0 #fff;
+        }
+
+        .cloud-2 {
+            width: 300px; height: 80px;
+            top: 30%; left: -400px;
+            animation-duration: 60s;
+            animation-delay: -10s;
+            box-shadow: 
+                80px -40px 0 20px #fff,
+                150px -20px 0 10px #fff,
+                -60px -30px 0 5px #fff;
+        }
+
+        .cloud-3 {
+            width: 250px; height: 70px;
+            top: 65%; left: -300px;
+            animation-duration: 50s;
+            animation-delay: -25s;
+            box-shadow: 
+                70px -35px 0 15px #fff,
+                130px -15px 0 0 #fff,
+                -50px -25px 0 0 #fff;
+        }
+        
+        @keyframes moveClouds {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(100vw + 400px)); }
+        }
+
+        h1 {
+            font-size: 3rem; 
+            font-weight: 900; 
+            margin-bottom: 60px;
+        }
+
+        .button-wrapper {
+            display: flex;
+            gap: 30px;
+            position: relative; 
+        }
+
+        .btn {
+            padding: 20px 45px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background-color: var(--bg-light);
+            box-shadow: 
+                -7px -7px 15px var(--shadow-light),
+                7px 7px 15px var(--shadow-dark);
+            transition: all 0.15s ease-out;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            cursor: pointer;
+        }
+
+        .btn:active {
+            box-shadow: 
+                inset -7px -7px 15px var(--shadow-light),
+                inset 7px 7px 15px var(--shadow-dark);
+            transform: scale(0.98);
+        }
+        
+        #yes-btn { color: var(--accent-yes); }
+        #no-btn { color: var(--accent-no); }
+        
+        #reward-container h2 {
+            font-family: var(--main-font);
+            font-weight: 900;
+            font-size: 3.5rem;
+            color: #000;
+            margin-bottom: 30px;
+        }
+
+        .gift-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90vw;
+            height: 70vh;
+            max-width: 400px;
+            max-height: 400px;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        #present-box {
+            font-size: 10rem;
+            cursor: pointer;
+            position: absolute;
+            z-index: 2;
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.3s ease-out;
+        }
+        
+        #reward-gif {
+            max-width: 100%;
+            max-height: 100%;
+            display: block; 
+            position: absolute;
+            z-index: 1;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.4s ease-out 0.1s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .shake {
+            animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+        @keyframes shake {
+            10%, 90% { transform: translateX(-4px); }
+            20%, 80% { transform: translateX(4px); }
+            30%, 50%, 70% { transform: translateX(-4px); }
+            40%, 60% { transform: translateX(4px); }
+        }
+        
+        #sorry-container {
+            justify-content: center;
+            line-height: 1.1;
+            font-weight: 900;
+            font-size: 2.5rem;
+            color: #ccc;
+            background-color: var(--bg-dark);
+            direction: ltr;
+        }
+
+        #sorry-container span {
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        #prompt-container {
+            background-color: var(--bg-dark);
+        }
+
+        #prompt-container h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: var(--text-light);
+        }
+        
+        .prompt-btn {
+            background: var(--bg-dark-card);
+            color: var(--accent-stats);
+            font-size: 1.5rem;
+            padding: 18px 40px;
+            border-radius: 15px;
+            box-shadow: -5px -5px 10px #252525, 5px 5px 10px #0F0F0F;
+        }
+
+        .prompt-btn:active {
+            box-shadow: inset -5px -5px 10px #252525, inset 5px 5px 10px #0F0F0F;
+        }
+
+        #stats-container {
+            background: var(--bg-dark);
+            font-family: var(--stats-font);
+            color: var(--text-light);
+            overflow-y: auto;
+            justify-content: flex-start;
+            padding: 50px 20px;
+            direction: ltr;
+        }
+
+        #stats-container h1 {
+            color: var(--text-light);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        #stats-container p {
+            font-size: 1.1rem;
+            color: #BDC3C7;
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .stat-card {
+            background: var(--bg-dark-card);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardFadeIn 0.5s ease-out forwards;
+        }
+
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-stats);
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+        
+        .stat-card .label {
+            font-size: 1rem;
+            font-weight: 300;
+            color: #BDC3C7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card .feeling {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        .stat-card:nth-child(2) { animation-delay: 0.1s; }
+        .stat-card:nth-child(3) { animation-delay: 0.2s; }
+        .stat-card:nth-child(4) { animation-delay: 0.3s; }
+        .stat-card:nth-child(5) { animation-delay: 0.4s; }
+        .stat-card:nth-child(6) { animation-delay: 0.5s; }
+
+        #card-final {
+            text-align: center;
+        }
+
+        #continue-btn {
+            background-color: var(--accent-stats);
+            color: var(--bg-dark);
+            font-size: 1.2rem;
+            padding: 15px 35px;
+            margin-top: 20px;
+            box-shadow: none;
+            font-weight: 700;
+            border-radius: 25px;
+            opacity: 0;
+            animation: cardFadeIn 0.5s ease-out 0.7s forwards;
+        }
+
+        #continue-btn:active {
+            background-color: #d4b35e;
+            transform: scale(0.98);
+            box-shadow: none;
+        }
+
+        #final-container {
+            background-color: #000;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            direction: ltr;
+        }
+
+        #final-container h2, #final-container p {
+            font-family: var(--stats-font);
+            color: #eee;
+            font-weight: 300;
+            opacity: 0;
+        }
+        
+        #final-text-1 {
+            font-size: 2.2rem;
+            animation: fadeIn 1.5s 0.5s ease-out forwards;
+        }
+        
+        #final-text-2 {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            animation: fadeIn 1.5s 3.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes cardFadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .btn { padding: 18px 35px; font-size: 1.2rem; }
+            #reward-container h2 { font-size: 2.8rem; }
+            #present-box { font-size: 8rem; }
+            #sorry-container { font-size: 1.5rem; line-height: 1.2; }
+            #prompt-container h2 { font-size: 2rem; }
+            #stats-container h1 { font-size: 1.8rem; }
+            .stat-card .number { font-size: 2.5rem; }
+            
+            #final-text-1 { font-size: 1.8rem; }
+            #final-text-2 { font-size: 1.5rem; }
+
+            .cloud-2 { display: none; } 
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="clouds">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+    </div>
+
+    <div id="question-container" class="container active">
+        <h1>ARE YOU SAD 🫵</h1>
+        <div class="button-wrapper">
+            <button id="yes-btn" class="btn">Yes</button>
+            <button id="no-btn" class="btn">No</button>
+        </div>
+    </div>
+
+    <div id="reward-container" class="container">
+        <h2>For you</h2>
+        <div class="gift-wrapper">
+            <div id="present-box">🎁</div>
+            <img id="reward-gif" src="File.gif" alt="A special GIF for you">
+        </div>
+    </div>
+
+    <div id="sorry-container" class="container">
+    </div>
+
+    <div id="prompt-container" class="container">
+        <h2>Do you want to see something</h2>
+        <div class="button-wrapper">
+            <button id="prompt-yes-1" class="btn prompt-btn">Yes</button>
+            <button id="prompt-yes-2" class="btn prompt-btn">Yes</button>
+        </div>
+    </div>
+
+    <div id="stats-container" class="container">
+        <h1>Our Story in 8 Days...</h1>
+        <p>(Oct 25 - Nov 2, 2025)</p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number">13,587</div>
+                <div class="label">Total Messages</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="number">1,726</div>
+                <div class="label">Media Files Shared</div>
+                <div class="feeling">All the photos, videos, and stickers we shared... each one is a memory I cherish.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="number">7,354</div>
+                <div class="label">Messages From Me</div>
+                <div class="feeling">I sent over 7,300 messages... I guess it shows I just can't stop talking to you.</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="number">4,149</div>
+                <div class="label">Messages After Midnight</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="number">3,495</div>
+                <div class="label">Emojis From Me</div>
+                <div class="feeling">Compared to your 298 emoji💀...</div>
+            </div>
+
+            <div class="stat-card" id="card-final">
+                <div class="number">1</div>
+                <div class="label">Thing That Matters</div>
+                <button id="continue-btn" class="btn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-container" class="container">
+        <h2 id="final-text-1">I don't want to lose you again..</h2>
+        <p id="final-text-2">ok?</p>
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const yesBtn = document.getElementById('yes-btn');
+            const noBtn = document.getElementById('no-btn');
+            const questionContainer = document.getElementById('question-container');
+            const rewardContainer = document.getElementById('reward-container');
+            const giftWrapper = document.querySelector('.gift-wrapper');
+            const presentBox = document.getElementById('present-box');
+            const rewardGif = document.getElementById('reward-gif');
+            const sorryContainer = document.getElementById('sorry-container');
+            const promptContainer = document.getElementById('prompt-container');
+            const statsContainer = document.getElementById('stats-container');
+            const promptYes1 = document.getElementById('prompt-yes-1');
+            const promptYes2 = document.getElementById('prompt-yes-2');
+            const continueBtn = document.getElementById('continue-btn'); 
+            const finalContainer = document.getElementById('final-container'); 
+
+            function switchContainer(from, to) {
+                if(from) from.classList.remove('active');
+                if(to) to.classList.add('active');
+            }
+
+            yesBtn.addEventListener('click', () => {
+                noBtn.classList.add('shake');
+                setTimeout(() => noBtn.classList.remove('shake'), 400); 
+            });
+
+            noBtn.addEventListener('click', () => {
+                document.body.style.backgroundColor = '#FFFFFF'; 
+                switchContainer(questionContainer, null);
+                document.getElementById('clouds').style.display = 'none';
+
+                setTimeout(() => {
+                    rewardContainer.classList.add('active');
+                    setTimeout(() => {
+                        giftWrapper.style.opacity = '1';
+                        giftWrapper.style.transform = 'scale(1)';
+                    }, 100); 
+                }, 500);
+            });
+
+            presentBox.addEventListener('click', () => {
+                presentBox.style.opacity = '0';
+                presentBox.style.transform = 'scale(1.5)';
+                rewardGif.style.opacity = '1';
+                rewardGif.style.transform = 'scale(1)';
+
+                setTimeout(() => {
+                    presentBox.style.display = 'none';
+                }, 300);
+                
+                setTimeout(startSorrySequence, 5500); 
+            });
+
+            function startSorrySequence() {
+                document.body.style.backgroundColor = 'var(--bg-dark)';
+                switchContainer(rewardContainer, sorryContainer);
+                
+                const sorryText = "I'm sorry for hurting you";
+                let lineCount = 0;
+                const maxLines = 15;
+
+                const centerSpan = document.createElement('span');
+                centerSpan.textContent = sorryText;
+                sorryContainer.appendChild(centerSpan);
+
+                const fillScreenInterval = setInterval(() => {
+                    if (lineCount >= maxLines) {
+                        clearInterval(fillScreenInterval);
+                        setTimeout(startPromptSequence, 2000);
+                        return;
+                    }
+                    const spanAbove = document.createElement('span');
+                    spanAbove.textContent = sorryText;
+                    sorryContainer.prepend(spanAbove);
+
+                    const spanBelow = document.createElement('span');
+                    spanBelow.textContent = sorryText;
+                    sorryContainer.appendChild(spanBelow);
+
+                    lineCount++;
+                }, 100); 
+            }
+
+            function startPromptSequence() {
+                switchContainer(sorryContainer, promptContainer);
+            }
+
+            function startStatsSequence() {
+                switchContainer(promptContainer, statsContainer);
+            }
+
+            promptYes1.addEventListener('click', startStatsSequence);
+            promptYes2.addEventListener('click', startStatsSequence);
+
+            continueBtn.addEventListener('click', () => {
+                document.body.style.backgroundColor = '#000'; 
+                switchContainer(statsContainer, finalContainer);
+            });
+
+        });
+    </script>
+
+</body>
+</html>
+
